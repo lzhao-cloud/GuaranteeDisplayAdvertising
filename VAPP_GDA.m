@@ -1,6 +1,6 @@
-function [x,y,h]=VAPP_GDA(s,d,penal,w,link,theta,iteration,u_v,fstar)
+function [x,y,h]=VAPP_GDA(s,d,penal,w,link,theta,iteration,fstar)
 [m,n]=size(link);
-x=u_v;
+x=zeros(m,n);%u_v;
 y=zeros(m,1);
 p1=zeros(m,1);
 p2=zeros(n,1);
