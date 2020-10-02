@@ -1,0 +1,25 @@
+function [s,d,p,w,link,theta]=GenerateGDA(m,n,Targeting)
+init=2055615866;
+rand('seed',init);
+randn('seed',init);
+normrnd('seed',init);
+Target = rand(m,n);
+index_Target = find(Target<=Targeting);
+link=zeros(m,n);
+link(index_Target)=1;
+Y_C=500*0.23;
+d_R=random(makedist('Triangular','a',0,'b',0.5,'c',1),m,1);
+d_R=d_R/sum(d_R);
+d=d_R*(Y_C/12)*0.4;%各专线月度货运需求量;
+s_R=random(makedist('Triangular','a',0,'b',0.5,'c',1),n,1);
+s_R=s_R/sum(s_R);%各车队运力比例;
+s=s_R*(Y_C/12)*0.6;%各车队运力供给量;
+w=randn(m,1);
+w=w+max(abs(w))*ones(m,1);
+w=w/sum(w)+ones(m,1);%各专线各车队单位运价,元/吨;
+p=2*max(max(w));%货运损失惩罚;
+% s=rand(n,1);%gprnd(5,1,0,[n,1]);
+% d=rand(m,1);
+% w=rand(m,1);
+% p=5;
+theta=d./(link*s);
